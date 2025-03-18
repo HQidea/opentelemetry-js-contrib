@@ -27,6 +27,10 @@ export interface MetricsCollectorConfig {
   meterProvider?: MeterProvider;
   // Name of component
   name?: string;
+  // Prefix for metrics
+  metricPrefix?: string;
+  // Attributes to add to all metrics
+  attributes?: { [key: string]: string };
 }
 
 const DEFAULT_NAME = PACKAGE_NAME;
@@ -38,6 +42,8 @@ export abstract class BaseMetrics {
   protected _logger = diag;
   protected _meter: Meter;
   private _name: string;
+  protected _metricPrefix: string;
+  protected _attributes: { [key: string]: string };
 
   constructor(config?: MetricsCollectorConfig) {
     // Do not use `??` operator to allow falling back to default when the
@@ -48,6 +54,8 @@ export abstract class BaseMetrics {
     }
     const meterProvider = config?.meterProvider ?? metrics.getMeterProvider();
     this._meter = meterProvider.getMeter(this._name, PACKAGE_VERSION);
+    this._metricPrefix = config?.metricPrefix ?? '';
+    this._attributes = config?.attributes ?? {};
   }
 
   /**

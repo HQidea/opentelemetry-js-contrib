@@ -1,5 +1,5 @@
 {
-  "name": "@opentelemetry/host-metrics",
+  "name": "host-metrics-extend",
   "version": "0.35.5",
   "description": "OpenTelemetry Host Metrics for Node.js",
   "main": "build/src/index.js",
